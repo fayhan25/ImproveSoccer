@@ -17,7 +17,7 @@ export function NavLinks() {
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
           <Nav className="justify-content-end">            
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/improve">Improve Soccer</Nav.Link>
+            <Nav.Link href="/chat">Improve Soccer</Nav.Link>
             <Nav.Link href="/login">Login</Nav.Link>
           </Nav>
         </Navbar.Collapse>
