@@ -1,0 +1,17 @@
+/* app/page.module.css */
+
+.container {
+    max-width: 100%;
+    font-size: larger;
+    
+  }
+.container :global .bg-dark{
+    background-color: #343a40;
+}
+  
+.carouselImageContainer {
+    position: relative;
+    height: 500px;
+  }
+
+

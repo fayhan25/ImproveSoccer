@@ -4,6 +4,8 @@ import { useChat } from 'ai/react';
 import Rating from '@mui/material/Rating'
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+
 export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
   const [firstq, setFirstq] = useState(true);
