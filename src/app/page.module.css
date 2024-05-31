@@ -11,7 +11,11 @@
   
 .carouselImageContainer {
     position: relative;
-    height: 500px;
+    align-items: center;
+    justify-content: center;
+  }
+  .carouselImageContainer img{
+    padding-top: 15%;
   }
 
 .mb-3{
