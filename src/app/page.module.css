@@ -14,4 +14,10 @@
     height: 500px;
   }
 
+.mb-3{
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
 
