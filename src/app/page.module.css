@@ -8,20 +8,9 @@
 .container :global .bg-dark{
     background-color: #343a40;
 }
-  
 .carouselImageContainer {
-    position: relative;
-    align-items: center;
-    justify-content: center;
-  }
-  .carouselImageContainer img{
-    padding-top: 15%;
-  }
-
-.mb-3{
-  justify-content: center;
+  position: relative;
+  height:500px;
   text-align: center;
-  align-items: center;
 }
-
 
