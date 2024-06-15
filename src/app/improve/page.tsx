@@ -33,6 +33,14 @@ const questions = [
   }
 ];
 
+let ratingsMap = new Map();
+ratingsMap.set("shooting", 0);
+ratingsMap.set("passing", 0);
+ratingsMap.set("dribbling", 0);
+ratingsMap.set("speed", 0);
+ratingsMap.set("play style", "");
+let el = [];
+
 export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -42,18 +50,33 @@ export default function Chat() {
     event.preventDefault();
     setCurrentQuestion(prev => prev + 1);
   }
-  
 
+  let playStyles = Array.from(ratingsMap.keys());
+  let myRatings = Array.from(ratingsMap.values());
+  let statsArr = []
+  for (let i= 0; i<playStyles.length; i++){
+    statsArr[i] = playStyles[i] +":"+ myRatings[i] 
+  }
   return (
     <div className={`container ${styles.chatContainer}`}>
-      {currentQuestion < questions.length && (
-        <Form onSubmit={handleNextQuestion} className="mb-3">
+{      currentQuestion < questions.length ? <Form onSubmit={handleNextQuestion} className="mb-3">
           <Questions 
             title={questions[currentQuestion].title}
             src={questions[currentQuestion].src}
+            ratingsMap = {ratingsMap}
           />
-        </Form>
-      )}
+        </Form>:
+        <div>
+          <ul>
+          {statsArr.map((myStyles) => (     
+               
+            <li>{myStyles}</li> 
+          ))}
+
+          </ul>
+          
+        </div>}
+      
 
         {/* <div className="mt-5">
           {messages.map((m) => (

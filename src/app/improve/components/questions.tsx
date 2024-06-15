@@ -12,12 +12,7 @@ import styles from './questions.module.css'
 import { set } from 'zod';
 import { Input } from '@mui/material';
 
-let ratingsMap = new Map();
-ratingsMap.set("shooting", 0);
-ratingsMap.set("passing", 0);
-ratingsMap.set("dribbling", 0);
-ratingsMap.set("speed", 0);
-ratingsMap.set("play style", "")
+
 
 export default function Questions(props:any){
   const [value,setValue] = useState<number | null>(2);
@@ -28,12 +23,15 @@ export default function Questions(props:any){
     
     function consoleCheck (){
       if (props.title != "play style"){
-        {ratingsMap.set(props.title,value)}
+        {props.ratingsMap.set(props.title,value)}
       }
       else{
-        {ratingsMap.set(props.title,summaryVal)}
+        {props.ratingsMap.set(props.title,summaryVal)}
       }
-      console.log(ratingsMap);
+      console.log(props.ratingsMap);
+    }
+    function handleChange(e:any) {
+      setSummaryVal(e.target.value);
     }
 
     return (
@@ -52,14 +50,14 @@ export default function Questions(props:any){
           />
         
         </div>
-        <Form>
-          <Form.Control 
-            value={summaryVal} 
-            as="textarea" 
-            placeholder="Summarize" 
-            rows={2}
-          />
-        </Form>
+        <Form.Control 
+          value={summaryVal}
+          onChange={handleChange} 
+          as="textarea" 
+          placeholder="Summarize" 
+          rows={2}
+        />
+        
       
         <Button onClick = {consoleCheck} type="submit" className="mt-3">Submit</Button>
       </Card>:
