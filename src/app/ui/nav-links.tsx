@@ -4,7 +4,13 @@ import Link from 'next/link'
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
-
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
 export function NavLinks() {
   const pathname = usePathname()
  
@@ -17,7 +23,13 @@ export function NavLinks() {
           <Nav className="justify-content-end">            
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/improve">Improve Soccer</Nav.Link>
-            <Nav.Link href="/login">Login</Nav.Link>
+            <SignedOut>
+              <Nav.Link><SignInButton/></Nav.Link>
+            </SignedOut>
+            <SignedIn>
+              <Nav.Link href="/sign-in"><UserButton afterSignOutUrl='/'/></Nav.Link>
+            </SignedIn>
+            
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -55,7 +55,7 @@ export default function Chat() {
   let myRatings = Array.from(ratingsMap.values());
   let statsArr = []
   for (let i= 0; i<playStyles.length; i++){
-    statsArr[i] = playStyles[i] +":"+ myRatings[i] 
+    statsArr[i] = playStyles[i] +": "+ myRatings[i] 
   }
   return (
     <div className={`container ${styles.chatContainer}`}>
@@ -68,13 +68,10 @@ export default function Chat() {
         </Form>:
         <div>
           <ul>
-          {statsArr.map((myStyles) => (     
-               
-            <li>{myStyles}</li> 
-          ))}
-
-          </ul>
-          
+            {statsArr.map((myStyles) => (                    
+              <li>{myStyles}</li> 
+            ))}
+          </ul>          
         </div>}
       
 

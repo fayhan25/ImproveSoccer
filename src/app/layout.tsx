@@ -3,6 +3,14 @@ import { Inter } from "next/font/google";
 import 'bootstrap/dist/css/bootstrap.css';
 import "./globals.css";
 import { NavLinks } from '@/app/ui/nav-links'
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -12,11 +20,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}:{children: React.ReactNode}) {
   return (
-    <html lang="en">
-      <body>
-        <NavLinks />
-        <main>{children}</main>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body>         
+          <NavLinks/>
+          <main>{children}</main>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
