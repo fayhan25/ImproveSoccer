@@ -27,6 +27,7 @@ export default function Questions(props:any){
       }
       else{
         {props.ratingsMap.set(props.title,summaryVal)}
+        props.submit;
       }
       console.log(props.ratingsMap);
     }

@@ -1,14 +1,14 @@
 'use client';
 
 import { useChat } from 'ai/react';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import Form from 'react-bootstrap/Form';
 
 import Questions from './components/questions';
 
 import styles from './page.module.css';
-
+import Button from 'react-bootstrap/Button';
 
 const questions = [
   {
@@ -39,58 +39,69 @@ ratingsMap.set("passing", 0);
 ratingsMap.set("dribbling", 0);
 ratingsMap.set("speed", 0);
 ratingsMap.set("play style", "");
-let el = [];
+
 
 export default function Chat() {
+  // const myElement = document.getElementById("button");
+  const myForm =  document.getElementById("allForm");
   const { messages, input, handleInputChange, handleSubmit } = useChat();
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [statsArr, setStatsArr] = useState(['Make me soccer recommandations assuming i have these values out of 10. Give me tips like which position i should play, and youtoube videos from unisport on how to improve my lower skills: ']);
 
 
   const handleNextQuestion = (event:any) => {
+    handleSubmit
     event.preventDefault();
     setCurrentQuestion(prev => prev + 1);
   }
+  
 
   let playStyles = Array.from(ratingsMap.keys());
   let myRatings = Array.from(ratingsMap.values());
-  let statsArr = []
-  for (let i= 0; i<playStyles.length; i++){
-    statsArr[i] = playStyles[i] +": "+ myRatings[i] 
+ 
+  for (let i= 1; i<playStyles.length; i++){
+   statsArr[i] = playStyles[i] +": "+ myRatings[i] 
   }
+
+  // if (myElement === null && currentQuestion > questions.length){
+  //   alert('oops');
+  // }
+  // else if (currentQuestion == questions.length-1 && myElement!=null){
+  //   useEffect(() => {
+  //     myElement.click()
+  //   }, []);
+  // }
+  let myInput = 'Make me soccer recommandations assuming i have these values out of 10. Give me tips like which position i should play, and youtoube videos from unisport on how to improve my lower skills: ' + statsArr;
+
   return (
     <div className={`container ${styles.chatContainer}`}>
-{      currentQuestion < questions.length ? <Form onSubmit={handleNextQuestion} className="mb-3">
+        <div className="mt-5">
+          {messages.map((m) => (
+            <div key={m.id}>
+              {m.content}
+            </div>
+          ))}
+        </div>
+
+      {currentQuestion < questions.length ? <Form onSubmit= {handleNextQuestion} className="mb-3">
           <Questions 
             title={questions[currentQuestion].title}
             src={questions[currentQuestion].src}
             ratingsMap = {ratingsMap}
           />
         </Form>:
-        <div>
-          <ul>
-            {statsArr.map((myStyles) => (                    
-              <li>{myStyles}</li> 
-            ))}
-          </ul>          
-        </div>}
+        
+        <form name = "allForm" onSubmit={handleSubmit}>
+          <input
+            className="w-100 p-2"
+            value={statsArr}
+            onChange={handleInputChange}
+          />        
+        </form>
+    
+        }
       
 
-        {/* <div className="mt-5">
-          {messages.map((m) => (
-            <div key={m.id}>
-              {m.content}
-            </div>
-          ))}
-        </div> */}
-
-        {/* <Form onSubmit={handleSubmit} className="fixed-bottom p-3 bg-light border-top">
-          <Form.Control
-            className="w-100 p-2"
-            value={input}
-            placeholder="Say something..."
-            onChange={handleInputChange}
-          />
-        </Form> */}
     </div>
   );
 }
