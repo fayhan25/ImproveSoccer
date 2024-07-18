@@ -44,7 +44,7 @@ ratingsMap.set("play style", "");
 export default function Chat() {
   // const myElement = document.getElementById("button");
   const myForm =  document.getElementById("allForm");
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  const { messages, input, setInput, handleInputChange, handleSubmit } = useChat();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [statsArr, setStatsArr] = useState(['Make me soccer recommandations assuming i have these values out of 10. Give me tips like which position i should play, and youtoube videos from unisport on how to improve my lower skills: ']);
 
@@ -72,6 +72,10 @@ export default function Chat() {
   //   }, []);
   // }
   let myInput = 'Make me soccer recommandations assuming i have these values out of 10. Give me tips like which position i should play, and youtoube videos from unisport on how to improve my lower skills: ' + statsArr;
+  
+  const setMyInput = () => {
+    setInput(myInput)
+  }
 
   return (
     <div className={`container ${styles.chatContainer}`}>
@@ -94,14 +98,13 @@ export default function Chat() {
         <form name = "allForm" onSubmit={handleSubmit}>
           <input
             className="w-100 p-2"
-            value={statsArr}
+            value={input}
             onChange={handleInputChange}
+            type='submit'
           />        
+          <button onClick= {setMyInput} type='submit'>Query AI</button>
         </form>
-    
         }
-      
-
     </div>
   );
 }
