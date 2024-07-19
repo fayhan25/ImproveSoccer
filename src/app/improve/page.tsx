@@ -9,6 +9,7 @@ import Questions from './components/questions';
 
 import styles from './page.module.css';
 import Button from 'react-bootstrap/Button';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 const questions = [
   {
@@ -42,11 +43,9 @@ ratingsMap.set("play style", "");
 
 
 export default function Chat() {
-  // const myElement = document.getElementById("button");
-  const myForm =  document.getElementById("allForm");
   const { messages, input, setInput, handleInputChange, handleSubmit } = useChat();
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [statsArr, setStatsArr] = useState(['Make me soccer recommandations assuming i have these values out of 10. Give me tips like which position i should play, and youtoube videos from unisport on how to improve my lower skills: ']);
+
 
 
   const handleNextQuestion = (event:any) => {
@@ -54,23 +53,15 @@ export default function Chat() {
     event.preventDefault();
     setCurrentQuestion(prev => prev + 1);
   }
-  
 
   let playStyles = Array.from(ratingsMap.keys());
   let myRatings = Array.from(ratingsMap.values());
  
-  for (let i= 1; i<playStyles.length; i++){
+  let statsArr = [];
+  for (let i= 0; i<playStyles.length; i++){
    statsArr[i] = playStyles[i] +": "+ myRatings[i] 
   }
 
-  // if (myElement === null && currentQuestion > questions.length){
-  //   alert('oops');
-  // }
-  // else if (currentQuestion == questions.length-1 && myElement!=null){
-  //   useEffect(() => {
-  //     myElement.click()
-  //   }, []);
-  // }
   let myInput = 'Make me soccer recommandations assuming i have these values out of 10. Give me tips like which position i should play, and youtoube videos from unisport on how to improve my lower skills: ' + statsArr;
   
   const setMyInput = () => {
@@ -101,8 +92,13 @@ export default function Chat() {
             value={input}
             onChange={handleInputChange}
             type='submit'
-          />        
-          <button onClick= {setMyInput} type='submit'>Query AI</button>
+          />
+          <ListGroup>
+            {statsArr.map( myItem => (
+              <ListGroup.Item>{myItem}</ListGroup.Item>
+            ))}  
+          </ListGroup>        
+          <Button className={`${styles.myButton}` }onClick= {setMyInput} type='submit'>Query AI</Button>
         </form>
         }
     </div>
