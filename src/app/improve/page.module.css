@@ -20,8 +20,6 @@
     text-align: center;
   }
 
-  .myButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .endQueries {
+    text-align: center;
   }

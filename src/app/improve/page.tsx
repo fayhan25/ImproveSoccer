@@ -46,8 +46,6 @@ export default function Chat() {
   const { messages, input, setInput, handleInputChange, handleSubmit } = useChat();
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
-
-
   const handleNextQuestion = (event:any) => {
     handleSubmit
     event.preventDefault();
@@ -73,7 +71,7 @@ export default function Chat() {
         <div className="mt-5">
           {messages.map((m) => (
             <div key={m.id}>
-              {m.content}
+              {m.role == 'assistant' && m.content}
             </div>
           ))}
         </div>
@@ -93,12 +91,16 @@ export default function Chat() {
             onChange={handleInputChange}
             type='submit'
           />
-          <ListGroup>
-            {statsArr.map( myItem => (
-              <ListGroup.Item>{myItem}</ListGroup.Item>
-            ))}  
-          </ListGroup>        
-          <Button className={`${styles.myButton}` }onClick= {setMyInput} type='submit'>Query AI</Button>
+          <div className={styles.endQueries}>
+            <ListGroup>
+              {statsArr.map( myItem => (
+                <ListGroup.Item>{myItem}</ListGroup.Item>
+              ))}  
+            </ListGroup> 
+            <div style = {{paddingTop: "3%"}}>     
+              <Button  onClick= {setMyInput} type='submit'>Query AI</Button>
+            </div>  
+          </div>
         </form>
         }
     </div>
