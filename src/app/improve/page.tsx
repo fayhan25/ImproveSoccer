@@ -4,12 +4,14 @@ import { useChat } from 'ai/react';
 import { useState, useCallback, useEffect } from 'react';
 
 import Form from 'react-bootstrap/Form';
+import Card from 'react-bootstrap/Card'
 
 import Questions from './components/questions';
 
 import styles from './page.module.css';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
+import { title } from 'process';
 
 const questions = [
   {
@@ -29,6 +31,14 @@ const questions = [
     src: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHk5bm0waGhuemhiMW45dHdnZGpmNHQ5NGZjeDFwMWl1czNnZGN1biZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/H7WGljzHQmOY132mSi/giphy.gif"
   },
   {
+    title: "your weight",
+    src: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYW9oZzFicW5paGtidzNobnkzbTNxc3lobTBwcmVvcW1wZW5hazAwZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ApD1UsWcVdJXmFLnCP/giphy.gif"
+  },
+  {
+    title: "your height",
+    src: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjM5djg5YTV0cDUzcXlqNWdjOG4wbDkyMDRmYmlkZ2hjanlvcGphMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/dSdYfe1n62M94t5p5W/giphy-downsized-large.gif"
+  },
+  {
     title: "play style",
     src: "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGxidGV1NG55NW1pa24zNGdiMzEzMWw2NzR3ODRwcGllc3c2ZTR2YSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/vnopV0LmQp9OFV9ibX/giphy.gif"
   }
@@ -39,6 +49,8 @@ ratingsMap.set("shooting", 0);
 ratingsMap.set("passing", 0);
 ratingsMap.set("dribbling", 0);
 ratingsMap.set("speed", 0);
+ratingsMap.set("your weight", "");
+ratingsMap.set("your height", "")
 ratingsMap.set("play style", "");
 
 
@@ -51,7 +63,9 @@ export default function Chat() {
     event.preventDefault();
     setCurrentQuestion(prev => prev + 1);
   }
-
+  const resetQuestion = () => {
+    setCurrentQuestion(0);
+  }
   let playStyles = Array.from(ratingsMap.keys());
   let myRatings = Array.from(ratingsMap.values());
  
@@ -60,7 +74,7 @@ export default function Chat() {
    statsArr[i] = playStyles[i] +": "+ myRatings[i] 
   }
 
-  let myInput = 'Make me soccer recommandations assuming i have these values out of 10. Give me tips like which position i should play, and youtoube videos from unisport on how to improve my lower skills: ' + statsArr;
+  let myInput = 'Make me soccer recommandations assuming i have these values out of 10, and my weight height and play style. Give me tips like which position i should play, how to improve my lower skills based on these: ' + statsArr;
   
   const setMyInput = () => {
     setInput(myInput)
@@ -68,14 +82,16 @@ export default function Chat() {
 
   return (
     <div className={`container ${styles.chatContainer}`}>
+      {currentQuestion >= questions.length && <Card bg = "success" className="text-center" text = 'light'>
         <div className="mt-5">
+        <Card.Title>Here are Soccer AI's tips for you</Card.Title>
           {messages.map((m) => (
             <div key={m.id}>
-              {m.role == 'assistant' && m.content}
+              <Card.Text>{m.role == 'assistant' && m.content}</Card.Text>
             </div>
           ))}
         </div>
-
+      </Card>}    
       {currentQuestion < questions.length ? <Form onSubmit= {handleNextQuestion} className="mb-3">
           <Questions 
             title={questions[currentQuestion].title}
@@ -94,11 +110,13 @@ export default function Chat() {
           <div className={styles.endQueries}>
             <ListGroup>
               {statsArr.map( myItem => (
-                <ListGroup.Item>{myItem}</ListGroup.Item>
+                <ListGroup.Item variant='info'>{myItem}</ListGroup.Item>
               ))}  
             </ListGroup> 
             <div style = {{paddingTop: "3%"}}>     
-              <Button  onClick= {setMyInput} type='submit'>Query AI</Button>
+            <Button onClick= {resetQuestion} type='submit'>Re-Enter stats</Button>
+              &nbsp;
+            <Button  onClick= {setMyInput} type='submit'>Query AI</Button>  
             </div>  
           </div>
         </form>
