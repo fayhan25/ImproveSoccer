@@ -57,6 +57,7 @@ ratingsMap.set("play style", "");
 export default function Chat() {
   const { messages, input, setInput, handleInputChange, handleSubmit } = useChat();
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [boolCheck, setBoolCheck] = useState(false);
 
   const handleNextQuestion = (event:any) => {
     handleSubmit
@@ -75,14 +76,15 @@ export default function Chat() {
   }
 
   let myInput = 'Make me soccer recommandations assuming i have these values out of 10, and my weight height and play style. Give me tips like which position i should play, how to improve my lower skills based on these: ' + statsArr;
-  
+ 
   const setMyInput = () => {
     setInput(myInput)
+    setBoolCheck(true)
   }
 
   return (
     <div className={`container ${styles.chatContainer}`}>
-      {currentQuestion >= questions.length && <Card bg = "success" className="text-center" text = 'light'>
+      {currentQuestion >= questions.length && boolCheck && <Card bg = "success" className="text-center" text = 'light'>
         <div className="mt-5">
         <Card.Title>Here are Soccer AI's tips for you</Card.Title>
           {messages.map((m) => (

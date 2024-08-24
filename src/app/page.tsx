@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <header className="bg-dark text-white text-center py-5">
-        <h1 className="display-3">Welcome to SoccerMaster</h1>
+        <h1 className="display-3">Welcome to SoccerAI</h1>
         <p className="lead">Your ultimate soccer companion app</p>
       </header>
 

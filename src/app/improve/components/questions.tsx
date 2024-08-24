@@ -40,9 +40,9 @@ export default function Questions(props:any){
 
     return (
         
-        props.title === "play style" ? <Card bg = "Success" className="text-center">
+        props.title === "play style" ? <Card style={{backgroundColor: "lightgreen"}} className="text-center">
         <Card.Title>{Capitalize(props.title)}</Card.Title>
-        <Card.Text>Summarize your {props.title}</Card.Text>
+        <Card.Text >Summarize your {props.title}</Card.Text>
         <div className={styles.carouselImageContainer}>
         
           <Image 
@@ -60,13 +60,14 @@ export default function Questions(props:any){
           as="textarea" 
           placeholder="Summarize" 
           rows={2}
+          style={{objectFit: "cover"}}
         />        
-        <Button onClick = {consoleCheck} type="submit" className="mt-3">Submit</Button>
+        <Button style={{backgroundColor: "green"}} onClick = {consoleCheck} type="submit" className="mt-3">Submit</Button>
       </Card>:
 
-      props.title === "your height"|| props.title === "your weight" ? <Card bg = "Success" className="text-center">
+      props.title === "your height"|| props.title === "your weight" ? <Card style={{backgroundColor: "lightgreen"}} className="text-center">
       <Card.Title>{Capitalize(props.title)}</Card.Title>
-      <Card.Text>{props.title} in metrics</Card.Text>
+      <Card.Text> {props.title === "your height"?  "your height in cm": "your weight in kg"}</Card.Text>
       <div className={styles.carouselImageContainer}>
       
         <Image 
@@ -87,10 +88,10 @@ export default function Questions(props:any){
       />
       
     
-      <Button onClick = {consoleCheck} type="submit" className="mt-3">Next</Button>
+      <Button style={{backgroundColor: "green"}} onClick = {consoleCheck} type="submit" className="mt-3">Next</Button>
     </Card>:
 
-      <Card bg = "Success" className="text-center">
+      <Card style={{backgroundColor: "lightgreen"}} className="text-center">
           <Card.Title>{Capitalize(props.title)}</Card.Title>
           <Card.Text>Rate your {props.title} from 0 to 10</Card.Text>
           <div className={styles.carouselImageContainer}>        
@@ -113,7 +114,7 @@ export default function Questions(props:any){
               }}
           />
           </div>
-          <Button onClick = {consoleCheck} type="submit" className="mt-3">Next</Button>
+          <Button style={{backgroundColor: "green"}} onClick = {consoleCheck} type="submit" className="mt-3">Next</Button>
         </Card>
     )
 }
