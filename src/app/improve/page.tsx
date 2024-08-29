@@ -12,6 +12,7 @@ import styles from './page.module.css';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { title } from 'process';
+import { error } from 'console';
 
 const questions = [
   {
@@ -69,7 +70,14 @@ export default function Chat() {
   }
   let playStyles = Array.from(ratingsMap.keys());
   let myRatings = Array.from(ratingsMap.values());
- 
+  let shooting = myRatings[0];
+  let passing = myRatings[1];
+  let dribbling = myRatings[2];
+  let speed = myRatings[3];
+  let weight = myRatings[4];
+  let height = myRatings[5];
+  let style = myRatings[6];
+
   let statsArr = [];
   for (let i= 0; i<playStyles.length; i++){
    statsArr[i] = playStyles[i] +": "+ myRatings[i] 
@@ -77,7 +85,17 @@ export default function Chat() {
 
   let myInput = 'Make me soccer recommandations assuming i have these values out of 10, and my weight height and play style. Give me tips like which position i should play, how to improve my lower skills based on these: ' + statsArr;
  
-  const setMyInput = () => {
+  const setMyInput = async () => {
+    
+    try {
+      fetch('/api/post', {
+        method: 'POST', 
+        headers: {'Content-Type': 'application/json'}, 
+        body: JSON.stringify({shooting,passing,dribbling,speed,weight,height,style})})
+    }
+    catch(error){
+      console.log(error);
+    }
     setInput(myInput)
     setBoolCheck(true)
   }

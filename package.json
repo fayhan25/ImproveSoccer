@@ -18,10 +18,13 @@
     "@mui/material": "^5.15.18",
     "@nextui-org/card": "^2.0.30",
     "@nextui-org/react": "^2.4.1",
+    "@prisma/client": "^5.19.0",
     "ai": "^3.1.12",
     "axios": "^1.7.2",
     "bootstrap": "^5.3.3",
     "framer-motion": "^11.2.6",
+    "msnodesqlv8": "^4.2.1",
+    "mssql": "^11.0.1",
     "next": "14.2.3",
     "openai": "^4.47.1",
     "react": "^18",
@@ -30,13 +33,15 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^20.16.1",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",
+    "prisma": "^5.18.0",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
   }
 }
