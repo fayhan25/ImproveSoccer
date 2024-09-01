@@ -5,7 +5,6 @@ export async function POST(request:any){
     const prisma = new PrismaClient()
     const res = await request.json();
     const {shooting, passing, dribbling, speed, weight,height, style} = res;
-    console.log({res});
     const result = await prisma.post.create({
         data:{
             shooting,
@@ -16,7 +15,7 @@ export async function POST(request:any){
             height,
             style,
             user: {create:{
-                email: 'myemail25@gmail.com'
+                id: '12345'
             }}
         }
     })

@@ -1,0 +1,34 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- DropForeignKey
+ALTER TABLE [dbo].[Post] DROP CONSTRAINT [Post_userId_fkey];
+
+-- DropIndex
+ALTER TABLE [dbo].[Users] DROP CONSTRAINT [Users_id_key];
+
+-- AlterTable
+ALTER TABLE [dbo].[Post] ALTER COLUMN [userId] NVARCHAR(1000) NOT NULL;
+
+-- AlterTable
+ALTER TABLE [dbo].[Users] ALTER COLUMN [id] NVARCHAR(1000) NOT NULL;
+
+-- CreateIndex
+ALTER TABLE [dbo].[Users] ADD CONSTRAINT [Users_id_key] UNIQUE NONCLUSTERED ([id]);
+
+-- AddForeignKey
+ALTER TABLE [dbo].[Post] ADD CONSTRAINT [Post_userId_fkey] FOREIGN KEY ([userId]) REFERENCES [dbo].[Users]([id]) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH
