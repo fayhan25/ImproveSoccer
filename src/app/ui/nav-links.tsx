@@ -23,6 +23,7 @@ export function NavLinks() {
           <Nav className="justify-content-end">            
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/improve">Improve Soccer</Nav.Link>
+            <Nav.Link href="/progress">Your Progress</Nav.Link>
             <SignedOut>
               <Nav.Link><SignInButton/></Nav.Link>
             </SignedOut>

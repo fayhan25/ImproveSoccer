@@ -1,0 +1,12 @@
+.progressContainer {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .progressCard {
+    border-radius: 10px;
+  }
+  
+  .statCol {
+    margin-bottom: 10px;
+  }
