@@ -11,8 +11,7 @@ import Questions from './components/questions';
 import styles from './page.module.css';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { title } from 'process';
-import { error } from 'console';
+import {PrismaClient} from "@prisma/client"
 
 const questions = [
   {
@@ -84,9 +83,10 @@ export default function Chat() {
   }
 
   let myInput = 'Make me soccer recommandations assuming i have these values out of 10, and my weight height and play style. Give me tips like which position i should play, how to improve my lower skills based on these: ' + statsArr;
- 
+
+  const prisma = new PrismaClient()
+
   const setMyInput = async () => {
-    
     try {
       fetch('/api/post', {
         method: 'POST', 

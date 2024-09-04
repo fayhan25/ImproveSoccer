@@ -1,7 +1,5 @@
 import {PrismaClient} from "@prisma/client"
 import { NextResponse } from "next/server";
-import { auth, currentUser } from '@clerk/nextjs/server'
-
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
@@ -54,12 +52,12 @@ export async function POST(req: Request) {
   // For this guide, you simply log the payload to the console
     
     const eventType = evt.type
+    const {id, ...attributes} = evt.data
     if (evt.type === 'user.created' || evt.type == 'user.updated') {
         const { id, ...attributes } = evt.data
-        console.log("id and attributes: ", id, attributes)
         const prisma = new PrismaClient()
         if (id){
-            let fname = attributes.first_name;
+            let fname = attributes.first_name + ' ';
             let lname = attributes.last_name;
             let name = fname?.concat(lname || '')
             const result = await prisma.users.create({
@@ -70,5 +68,5 @@ export async function POST(req: Request) {
             })
         }
     }
-    return NextResponse.json({data:evt})
+    return NextResponse.json({data:{id, ...attributes}})
 }
