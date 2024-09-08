@@ -53,9 +53,14 @@ ratingsMap.set("your weight", "");
 ratingsMap.set("your height", "")
 ratingsMap.set("play style", "");
 
-
 export default function Chat() {
-  const { messages, input, setInput, handleInputChange, handleSubmit } = useChat();
+  const [myMessage, setMyMessage] = useState("")
+  const { messages, input, setInput, handleInputChange, handleSubmit,isLoading} = useChat({
+    onFinish: (message) => {
+      setMyMessage(message.content);
+    },
+  });
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [boolCheck, setBoolCheck] = useState(false);
 
@@ -81,21 +86,25 @@ export default function Chat() {
   for (let i= 0; i<playStyles.length; i++){
    statsArr[i] = playStyles[i] +": "+ myRatings[i] 
   }
-
+  
   let myInput = 'Make me soccer recommandations assuming i have these values out of 10, and my weight height and play style. Give me tips like which position i should play, how to improve my lower skills based on these: ' + statsArr;
 
-  const prisma = new PrismaClient()
+  useEffect(()=> {
+    console.log("mymessage is", myMessage)
+    if (myMessage !== ''){
+      try {
+        fetch('/api/post', {
+          method: 'POST', 
+          headers: {'Content-Type': 'application/json'}, 
+          body: JSON.stringify({shooting,passing,dribbling,speed,weight,height,style,myMessage})})
+      }
+      catch(error){
+        console.log(error);
+      }
+    }
+  },[myMessage])
 
   const setMyInput = async () => {
-    try {
-      fetch('/api/post', {
-        method: 'POST', 
-        headers: {'Content-Type': 'application/json'}, 
-        body: JSON.stringify({shooting,passing,dribbling,speed,weight,height,style})})
-    }
-    catch(error){
-      console.log(error);
-    }
     setInput(myInput)
     setBoolCheck(true)
   }
