@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import 'bootstrap/dist/css/bootstrap.css';
 import "./globals.css";
+import {NextUIProvider} from "@nextui-org/react";
 import { NavLinks } from '@/app/ui/nav-links'
 import {
   ClerkProvider,
@@ -20,13 +21,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}:{children: React.ReactNode}) {
   return (
+    
     <ClerkProvider>
+      
       <html lang="en">
         <body>         
           <NavLinks/>
-          <main>{children}</main>
+          <NextUIProvider>{children}</NextUIProvider>
         </body>
       </html>
+      
     </ClerkProvider>
+    
   );
 }

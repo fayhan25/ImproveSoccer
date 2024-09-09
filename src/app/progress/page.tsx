@@ -1,13 +1,15 @@
 'use client'
 import React, { useEffect } from 'react';
-import { Container, Row, Col, Card, ProgressBar, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, ProgressBar} from 'react-bootstrap';
 import styles from './page.module.css';
 import { useAuth } from '@clerk/nextjs';
 import { PrismaClient, Prisma } from '@prisma/client'
 import useSWR from 'swr'
-
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure} from "@nextui-org/modal";
+import { Button } from "@nextui-org/react";
 
 const Progress = () => {
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const prisma = new PrismaClient()
   const {userId} = useAuth();
   const fetcher = (URL:any )=> fetch(URL).then(r => r.json())
@@ -23,8 +25,9 @@ const Progress = () => {
       <h1 className="text-center mt-4 mb-4">Your Progress Tracker</h1>
  
       {userProgress.map((progress:any, index:any) => (
+        <React.Fragment>
         <Card key={index} className={`mb-4 ${styles.progressCard}`}>
-          <Card.Header as="h5">{progress.date}</Card.Header>
+          <Card.Header as="h5">{progress.CreatedDate.slice(0,10)}</Card.Header>
           <Card.Body>
             <Row>
               <Col md={4} className={styles.statCol}>
@@ -56,9 +59,46 @@ const Progress = () => {
             </Row>
           </Card.Body>
           <Card.Footer className="text-center">
-            <Button variant="primary">View Details</Button>
+            <Button color="secondary" onPress={onOpen}>View Details</Button>
           </Card.Footer>
         </Card>
+
+
+        <Modal 
+        backdrop="opaque" 
+        size = '4xl'
+        isOpen={isOpen} 
+        onOpenChange={onOpenChange}
+        
+        classNames={{
+          body: "py-6",
+          backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
+          base: "border-[#292f46] bg-[#19172c] dark:bg-[#19172c] text-[#a8b0d3]",
+          header: "border-b-[1px] border-[#292f46]",
+          footer: "border-t-[1px] border-[#292f46]",
+          closeButton: "hover:bg-white/5 active:bg-white/10",
+        }}
+      >
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">AI Recommendations</ModalHeader>
+                <ModalBody>
+                  <p> 
+                    {progress.messages}
+                  </p>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+      </Modal>
+        </React.Fragment>
+        
       ))}
     </Container>
   );

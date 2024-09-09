@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Rating from '@mui/material/Rating';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
@@ -16,15 +16,15 @@ export default function Questions(props:any){
     function Capitalize(str:string){
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
-    const resetSummaryVal = (event:any) => {
+    useEffect(() => {
       setSummaryVal("");
-    }
+    },[props.title])
+
     function consoleCheck (){
       if (props.title != "play style" && props.title != "your weight" && props.title != "your height"){
         {props.ratingsMap.set(props.title,value)}
       }
       else if (props.title === "your weight" || props.title === "your height"){
-        resetSummaryVal
         {props.ratingsMap.set(props.title,summaryVal)}        
       }
       else{
@@ -90,7 +90,6 @@ export default function Questions(props:any){
     
       <Button style={{backgroundColor: "green"}} onClick = {consoleCheck} type="submit" className="mt-3">Next</Button>
     </Card>:
-
       <Card style={{backgroundColor: "lightgreen"}} className="text-center">
           <Card.Title>{Capitalize(props.title)}</Card.Title>
           <Card.Text>Rate your {props.title} from 0 to 10</Card.Text>
@@ -107,7 +106,7 @@ export default function Questions(props:any){
           <div style={{textAlign:"center"}}>
 
           
-          <Rating precision={0.5} name="customized-10" defaultValue={0} max={10} 
+          <Rating name="customized-10" defaultValue={0} max={10} 
               value={value}
               onChange={(event, newValue) => {
                 setValue(newValue);                
