@@ -36,8 +36,12 @@ const Progress = () => {
   console.log(userProgress);
   return ( 
     <Container className={styles.progressContainer}>
-      <h1 className="text-center mt-4 mb-4">Your Progress Tracker</h1>
- 
+    <div className={styles.container}>
+      <header className="text-center py-5">
+        <h1 className="display-3">Progress Tracker</h1>
+        <p className="lead">Track your progress here sorted by date</p>
+      </header>
+    </div>
       {userProgress.map((progress:any, index:any) => (
         
         <React.Fragment>

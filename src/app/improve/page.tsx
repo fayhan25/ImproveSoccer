@@ -2,9 +2,10 @@
 
 import { useChat } from 'ai/react';
 import { useState, useCallback, useEffect } from 'react';
-
+import Image from 'next/image';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card'
+import { Carousel } from 'react-bootstrap';
 
 import Questions from './components/questions';
 
@@ -110,7 +111,40 @@ export default function Chat() {
   }
 
   return (
+    <div className={styles.mainDiv}>
+      <div className={styles.myCarousel}>
+        <Carousel>
+            <Carousel.Item>
+              <div className={styles.carouselImageContainer}>
+                <Image src="/images/soccer1.jpg" layout="fill" objectFit="cover" alt="Soccer Match"  />
+              </div>
+              <Carousel.Caption>
+                
+                <p>Rate yourself for each field by clicking on the star, fill in the box for the rest</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+
+            <Carousel.Item>
+            <div className={styles.carouselImageContainer}>
+              <Image src="/images/soccer1.jpg" alt="Training" layout="fill" objectFit="cover" />
+            </div>
+            <Carousel.Caption>
+              <p>Click on Query AI if the table looks correct you will then receive the AI tips</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+
+          <Carousel.Item>
+            <div className={styles.carouselImageContainer}>
+              <Image src="/images/soccer1.jpg" alt="Training" layout="fill" objectFit="cover" />
+            </div>
+            <Carousel.Caption>
+              <p>You can check your progress in the Progress bar from the menu</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          </Carousel>
+      </div>
     <div className={`container ${styles.chatContainer}`}>
+
       {currentQuestion >= questions.length && boolCheck && <Card bg = "success" className="text-center" text = 'light'>
         <div className="mt-5">
         <Card.Title>Here are Soccer AI's tips for you</Card.Title>
@@ -150,6 +184,7 @@ export default function Chat() {
           </div>
         </form>
         }
+    </div>
     </div>
   );
 }

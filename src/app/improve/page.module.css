@@ -1,23 +1,30 @@
 /* app/page.module.css */
 
 .chatContainer {
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
     padding-top: 20px;
   }
-  
+  .myCarousel{
+    
+    padding-top: 2%;
+    max-width: 100%;
+    margin: auto;
+    font-size: larger;
+  }
+
   .whitespace-pre-wrap {
     white-space: pre-wrap;
   }
-  
   .fixed-bottom {
     bottom: 0;
     width: 100%;
   }
   .carouselImageContainer {
     position: relative;
-    height:400px;
+    height:200px;
     text-align: center;
+    
   }
 
   .endQueries {
