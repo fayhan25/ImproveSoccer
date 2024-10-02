@@ -4,8 +4,9 @@ import { useChat } from 'ai/react';
 import { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import Form from 'react-bootstrap/Form';
-import Card from 'react-bootstrap/Card'
+
 import { Carousel } from 'react-bootstrap';
+import { Container, Row, Col, Card, ProgressBar} from 'react-bootstrap';
 
 import Questions from './components/questions';
 
@@ -112,37 +113,10 @@ export default function Chat() {
 
   return (
     <div className={styles.mainDiv}>
-      <div className={styles.myCarousel}>
-        <Carousel>
-            <Carousel.Item>
-              <div className={styles.carouselImageContainer}>
-                <Image src="/images/soccer1.jpg" layout="fill" objectFit="cover" alt="Soccer Match"  />
-              </div>
-              <Carousel.Caption>
-                
-                <p>Rate yourself for each field by clicking on the star, fill in the box for the rest</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-
-            <Carousel.Item>
-            <div className={styles.carouselImageContainer}>
-              <Image src="/images/soccer1.jpg" alt="Training" layout="fill" objectFit="cover" />
-            </div>
-            <Carousel.Caption>
-              <p>Click on Query AI if the table looks correct you will then receive the AI tips</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-
-          <Carousel.Item>
-            <div className={styles.carouselImageContainer}>
-              <Image src="/images/soccer1.jpg" alt="Training" layout="fill" objectFit="cover" />
-            </div>
-            <Carousel.Caption>
-              <p>You can check your progress in the Progress bar from the menu</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-          </Carousel>
-      </div>
+      <header className="text-center py-5">
+        <h1 className="display-3">AI Recomendations</h1>
+        <p className="lead">Get your AI recommandations below</p>
+      </header>
     <div className={`container ${styles.chatContainer}`}>
 
       {currentQuestion >= questions.length && boolCheck && <Card bg = "success" className="text-center" text = 'light'>
@@ -155,13 +129,53 @@ export default function Chat() {
           ))}
         </div>
       </Card>}    
-      {currentQuestion < questions.length ? <Form onSubmit= {handleNextQuestion} className="mb-3">
-          <Questions 
-            title={questions[currentQuestion].title}
-            src={questions[currentQuestion].src}
-            ratingsMap = {ratingsMap}
-          />
-        </Form>:
+      {currentQuestion < questions.length ? 
+      <Row>
+        <Col>
+          <div className={styles.myCarousel}>
+          <Carousel>
+              <Carousel.Item>
+                <div className={styles.carouselImageContainer}>
+                  <Image src="/images/soccer1.jpg" layout="fill" objectFit="cover" alt="Soccer Match"  />
+                </div>
+                <Carousel.Caption>
+                  
+                  <p>Rate yourself for each field by clicking on the star, fill in the box for the rest</p>
+                </Carousel.Caption>
+              </Carousel.Item>
+
+              <Carousel.Item>
+              <div className={styles.carouselImageContainer}>
+                <Image src="/images/soccer1.jpg" alt="Training" layout="fill" objectFit="cover" />
+              </div>
+              <Carousel.Caption>
+                <p>Click on Query AI if the table looks correct. You will then receive the AI tips</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+
+            <Carousel.Item>
+              <div className={styles.carouselImageContainer}>
+                <Image src="/images/soccer1.jpg" alt="Training" layout="fill" objectFit="cover" />
+              </div>
+              <Carousel.Caption>
+                <p>You can check your progress in the Progress bar from the navigation bar and come back here after you have improved</p>
+              </Carousel.Caption>
+            </Carousel.Item>
+            </Carousel>
+          </div>
+        </Col>
+
+        <Col>
+          <Form onSubmit= {handleNextQuestion} className="mb-3">
+            <Questions 
+              title={questions[currentQuestion].title}
+              src={questions[currentQuestion].src}
+              ratingsMap = {ratingsMap}
+            />
+          </Form>
+        </Col>
+      </Row>
+        :
         
         <form name = "allForm" onSubmit={handleSubmit}>
           <input

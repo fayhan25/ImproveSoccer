@@ -11,10 +11,28 @@ const Progress = () => {
   const router = useRouter()
   const infoModal = useDisclosure();
   const deleteModal = useDisclosure();
-
+  const [userInfo, setUserInfo] = useState(null)
+  const [userMessage, setUserMessage] = useState(null)
   const fetcher = (URL:any )=> fetch(URL).then(r => r.json())
   const {data,error} = useSWR('api/getposts',fetcher)
 
+  const handleOpen = (myId:any) => {
+    setUserInfo(myId);
+    deleteModal.onOpen();
+  }
+  const handleMessage = (myMessage:any) => {
+    setUserMessage(myMessage)
+    infoModal.onOpen();
+  }
+  const handleClose = () =>{
+    setUserInfo(null);
+    deleteModal.onClose();
+  }
+
+  const handleMessageClose = () =>{
+    setUserMessage(null);
+    infoModal.onClose();
+  }
   const deletePost = (postId:any) =>{
     try {
       fetch('/api/deletepost', {
@@ -79,13 +97,24 @@ const Progress = () => {
             </Row>
           </Card.Body>
           <Card.Footer className="text-center">
-            <Button color="secondary" onPress={infoModal.onOpen}>View Details</Button>
-            <Button style = {{paddingLeft: "150%"}} color="danger" onPress={deleteModal.onOpen}>Delete</Button>
+            <Button color="secondary" onPress={() => handleMessage(progress.messages)}>View Details</Button>
+            <Button 
+              style = {{paddingLeft: "150%"}} 
+              color="danger" 
+              onPress={() => handleOpen(progress.id)}
+            >
+                Delete    
+            </Button>
           </Card.Footer>
         </Card>
 
 
-        <Modal 
+        </React.Fragment>
+        
+      ))}
+
+      
+      <Modal 
         backdrop="opaque" 
         size = 'xl'
         isOpen={infoModal.isOpen} 
@@ -106,14 +135,11 @@ const Progress = () => {
                 <ModalHeader className="flex flex-col gap-1">AI Recommendations</ModalHeader>
                 <ModalBody>
                   <p> 
-                    {progress.messages}
+                    {userMessage}
                   </p>
                 </ModalBody>
                 <ModalFooter>
-                <Button color="danger" variant="light" >
-                    Delete
-                  </Button>
-                  <Button color="danger" variant="light" onPress={onClose}>
+                  <Button color="danger" variant="light" onPress={handleMessageClose}>
                     Close
                   </Button>
                 </ModalFooter>
@@ -147,20 +173,18 @@ const Progress = () => {
                   </p>
                 </ModalBody>
                 <ModalFooter>
-                <Button color="danger" variant="solid" onClick={(event) => {deletePost(progress.id)}}>
+                <Button color="danger" variant="solid" onClick={(event) => {deletePost(userInfo)}}>
                     Delete
                   </Button>
-                  <Button color="danger" variant="light" onPress={onClose}>
+                  <Button color="danger" variant="light" onPress={handleClose}>
                     Close
                   </Button>
                 </ModalFooter>
               </>
-            )}
+            )
+            }
           </ModalContent>
       </Modal>
-        </React.Fragment>
-        
-      ))}
     </Container>
   );
 };

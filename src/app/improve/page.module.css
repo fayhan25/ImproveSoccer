@@ -1,13 +1,11 @@
 /* app/page.module.css */
 
 .chatContainer {
-    max-width: 800px;
+    max-width: 80%;
     margin: 0 auto;
     padding-top: 20px;
   }
   .myCarousel{
-    
-    padding-top: 2%;
     max-width: 100%;
     margin: auto;
     font-size: larger;
@@ -22,7 +20,7 @@
   }
   .carouselImageContainer {
     position: relative;
-    height:200px;
+    height:566px;
     text-align: center;
     
   }

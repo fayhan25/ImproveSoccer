@@ -39,8 +39,8 @@ export default function Home() {
               <Image src="/images/soccer3.jpg" alt="Team" layout="fill" objectFit="cover" />
             </div>
             <Carousel.Caption>
-              <h3>Specific Tutorials</h3>
-              <p>You will get specific tutorials for your needs with video instructions</p>
+              <h3>Track Your Progress</h3>
+              <p>You can track your progress as you improve and use this app as your soccer diary</p>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
