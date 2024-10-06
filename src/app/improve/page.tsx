@@ -2,18 +2,19 @@
 
 import { useChat } from 'ai/react';
 import { useState, useCallback, useEffect } from 'react';
-import Image from 'next/image';
-import Form from 'react-bootstrap/Form';
 
+import Image from 'next/image';
+import { redirect } from 'next/navigation';
+
+import Form from 'react-bootstrap/Form';
 import { Carousel } from 'react-bootstrap';
 import { Container, Row, Col, Card, ProgressBar} from 'react-bootstrap';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Button from 'react-bootstrap/Button';
 
 import Questions from './components/questions';
-
 import styles from './page.module.css';
-import Button from 'react-bootstrap/Button';
-import ListGroup from 'react-bootstrap/ListGroup';
-import {PrismaClient} from "@prisma/client"
+
 
 const questions = [
   {
@@ -65,6 +66,7 @@ export default function Chat() {
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [boolCheck, setBoolCheck] = useState(false);
+  const [isQueried, setIsQueried] = useState(true);
 
   const handleNextQuestion = (event:any) => {
     handleSubmit
@@ -107,7 +109,12 @@ export default function Chat() {
   },[myMessage])
 
   const setMyInput = async () => {
-    setInput(myInput)
+
+    try{setInput(myInput)}
+    catch(err){
+      console.log(err);
+    }
+    setIsQueried(false)
     setBoolCheck(true)
   }
 
@@ -131,25 +138,25 @@ export default function Chat() {
       </Card>}    
       {currentQuestion < questions.length ? 
       <Row>
-        <Col>
+        <Col md = {6}>
           <div className={styles.myCarousel}>
           <Carousel>
               <Carousel.Item>
                 <div className={styles.carouselImageContainer}>
-                  <Image src="/images/soccer1.jpg" layout="fill" objectFit="cover" alt="Soccer Match"  />
+                  <Image src="/images/soccer3.jpg" layout="fill" objectFit="cover" alt="Soccer Match"  />
                 </div>
                 <Carousel.Caption>
                   
-                  <p>Rate yourself for each field by clicking on the star, fill in the box for the rest</p>
+                  <p style={{fontWeight:"bold"}}>Rate yourself for each field by clicking on the star, fill in the box for the rest</p>
                 </Carousel.Caption>
               </Carousel.Item>
 
               <Carousel.Item>
               <div className={styles.carouselImageContainer}>
-                <Image src="/images/soccer1.jpg" alt="Training" layout="fill" objectFit="cover" />
+                <Image src="/images/soccer5.jpg" alt="Training" layout="fill" objectFit="cover" />
               </div>
               <Carousel.Caption>
-                <p>Click on Query AI if the table looks correct. You will then receive the AI tips</p>
+                <p style={{fontWeight:"bold"}}>Click on Query AI if the table looks correct. You will then receive the AI tips</p>
               </Carousel.Caption>
             </Carousel.Item>
 
@@ -158,14 +165,14 @@ export default function Chat() {
                 <Image src="/images/soccer1.jpg" alt="Training" layout="fill" objectFit="cover" />
               </div>
               <Carousel.Caption>
-                <p>You can check your progress in the Progress bar from the navigation bar and come back here after you have improved</p>
+                <p style={{fontWeight:"bold"}}>You can check your progress in the Progress bar from the navigation bar and come back here after you have improved</p>
               </Carousel.Caption>
             </Carousel.Item>
             </Carousel>
           </div>
         </Col>
 
-        <Col>
+        <Col md = {6}>
           <Form onSubmit= {handleNextQuestion} className="mb-3">
             <Questions 
               title={questions[currentQuestion].title}
@@ -176,7 +183,7 @@ export default function Chat() {
         </Col>
       </Row>
         :
-        
+        <div>
         <form name = "allForm" onSubmit={handleSubmit}>
           <input
             className="w-100 p-2"
@@ -191,12 +198,14 @@ export default function Chat() {
               ))}  
             </ListGroup> 
             <div style = {{paddingTop: "3%"}}>     
-            <Button onClick= {resetQuestion} type='submit'>Re-Enter stats</Button>
+            {<Button style = {isQueried? {} : {display:'none'}} onClick= {resetQuestion} type='submit'>Re-Enter stats</Button>}
               &nbsp;
-            <Button  onClick= {setMyInput} type='submit'>Query AI</Button>  
+            {<Button style = {isQueried? {} : {display:'none'}} onClick= {setMyInput} type='submit'>Query AI</Button>}  
+           
             </div>  
           </div>
         </form>
+        </div>
         }
     </div>
     </div>
