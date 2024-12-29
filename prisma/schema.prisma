@@ -1,11 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
   enginetype = "dataproxy"
 }
 
@@ -15,22 +9,22 @@ datasource db {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  CreatedDate  DateTime @default(now())
-  shooting  Int      
-  passing   Int
-  dribbling Int
-  speed     Int
-  weight    String
-  height    String
-  style     String
-  messages  String    @db.VarChar(3000)   
-  user      Users     @relation(fields: [userId], references: [id])
-  userId    String
+  id          Int      @id @default(autoincrement())
+  shooting    Int
+  passing     Int
+  dribbling   Int
+  speed       Int
+  weight      String
+  height      String
+  style       String
+  userId      String
+  CreatedDate DateTime @default(now())
+  messages    String   @db.VarChar(3000)
+  user        Users    @relation(fields: [userId], references: [id])
 }
 
 model Users {
-  id      String     @unique
-  name    String?
-  posts   Post[]
+  id    String  @unique
+  name  String?
+  posts Post[]
 }
